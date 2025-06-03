@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ContentInput from './components/ContentInput';
 import Quiz from './components/Quiz';
 import { generateQuiz } from './utils/quizGenerator';
@@ -7,7 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 function App() {
-  const [content, setContent] = useState<string>('');
+  const [_, setContent] = useState<string>('');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
 
