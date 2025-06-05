@@ -7,7 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 function App() {
-  const [_, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>('');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
 
@@ -19,6 +19,9 @@ function App() {
   };
 
   const handleRestartQuiz = () => {
+    // Generate a new set of questions from the same content
+    const newQuestions = generateQuiz(content);
+    setQuestions(newQuestions);
     setIsQuizStarted(true);
   };
 

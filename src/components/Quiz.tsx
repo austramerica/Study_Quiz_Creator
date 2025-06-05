@@ -60,6 +60,13 @@ const Quiz = ({ questions, onRestart, onCreateNew }: QuizProps) => {
     return correctCount;
   };
   
+  const handleRestartQuiz = () => {
+    setCurrentQuestionIndex(0);
+    setSelectedAnswers({});
+    setShowResults(false);
+    onRestart(); // This will generate new questions
+  };
+  
   if (showResults) {
     const score = calculateScore();
     const percentage = Math.round((score / questions.length) * 100);
@@ -90,8 +97,13 @@ const Quiz = ({ questions, onRestart, onCreateNew }: QuizProps) => {
                       <FaTimes className="h-4 w-4 text-red-600" />
                     )}
                   </div>
-                  <div>
-                    <p className="text-secondary-900 font-medium">Question {index + 1}: {question.text}</p>
+                  <div className="flex-1">
+                    <div className="flex justify-between">
+                      <p className="text-secondary-900 font-medium">Question {index + 1}: {question.text}</p>
+                      <span className="text-xs px-2 py-1 rounded-full bg-secondary-100 text-secondary-700 ml-2">
+                        Fill in Blank
+                      </span>
+                    </div>
                     <p className="text-sm mt-1">
                       <span className="text-secondary-600">Your answer: </span>
                       <span className={isCorrect ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}>
@@ -113,16 +125,11 @@ const Quiz = ({ questions, onRestart, onCreateNew }: QuizProps) => {
         
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button 
-            onClick={() => {
-              setCurrentQuestionIndex(0);
-              setSelectedAnswers({});
-              setShowResults(false);
-              onRestart();
-            }} 
+            onClick={handleRestartQuiz} 
             className="btn btn-outline flex items-center justify-center"
           >
             <FaRedo className="mr-2" />
-            Restart Quiz
+            Restart Quiz with New Questions
           </button>
           <button 
             onClick={onCreateNew} 
@@ -139,7 +146,12 @@ const Quiz = ({ questions, onRestart, onCreateNew }: QuizProps) => {
   return (
     <div className="card">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-heading font-semibold text-secondary-900">Question {currentQuestionIndex + 1} of {questions.length}</h2>
+        <div className="flex items-center">
+          <h2 className="text-2xl font-heading font-semibold text-secondary-900">Question {currentQuestionIndex + 1} of {questions.length}</h2>
+          <span className="text-xs px-2 py-1 rounded-full bg-secondary-100 text-secondary-700 ml-2">
+            Fill in Blank
+          </span>
+        </div>
         <div className="text-sm font-medium text-secondary-500">
           {Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}% Complete
         </div>
